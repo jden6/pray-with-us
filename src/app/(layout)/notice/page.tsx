@@ -4,10 +4,10 @@ import Page from '@/layout/Page'
 
 const NoticePage = () => {
   return <Page title="공지사항">
-    <div className={cn('md:grid', 'gap-4', 'md:grid-cols-2', 'lg:grid-cols-4')}>
+    <div className={cn('md:grid', 'gap-4', 'md:grid-cols-2', 'sm:grid-cols-1')}>
       <Card>
         <CardHeader>
-          <CardTitle>시스템 공지</CardTitle>
+          <CardTitle>마을 공지 사항</CardTitle>
           <CardContent>
             <p>공지사항이 없습니다.</p>
           </CardContent>
@@ -15,9 +15,17 @@ const NoticePage = () => {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>시스템 공지</CardTitle>
+          <CardTitle>이번주 마을 예배 자리</CardTitle>
           <CardContent>
-            <p>공지사항이 없습니다.</p>
+            사진
+          </CardContent>
+        </CardHeader>
+      </Card>
+      <Card className={cn('col-span-2')}>
+        <CardHeader>
+          <CardTitle>오늘의 새 기도제목</CardTitle>
+          <CardContent>
+            <p>새 기도제목 리스트</p>
           </CardContent>
         </CardHeader>
       </Card>
