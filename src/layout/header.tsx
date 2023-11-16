@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import LogoutButton from '@/layout/logout.button'
 
 const LayoutHeader = () => {
   return <header
@@ -43,7 +44,7 @@ const LayoutHeader = () => {
             <DropdownMenuSeparator/>
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuSeparator/>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <LogoutButton />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
