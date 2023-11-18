@@ -1,6 +1,12 @@
 import { UserAuthForm } from '@/app/signin/_components/userAuthForm'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const session = await getServerSession()
+  if(session != null){
+    return redirect('/home')
+  }
   return (
     <div className="container relative flex h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
