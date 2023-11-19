@@ -1,17 +1,31 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { PrayCardProps } from '@/app/(layout)/pray/pray.type'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
+import { BookmarkIcon } from '@radix-ui/react-icons'
 
-const PrayCard = ({ title, date, tags, content, author }: PrayCardProps) => {
+const PrayCard = ({ tags, contents, author, createdAt }: PrayCardProps) => {
   return <Card>
     <CardHeader>
-      <CardTitle>{title}</CardTitle>
-      {/*<CardDescription>Card Description</CardDescription>*/}
+      <div className={cn('flex', 'justify-between')}>
+        <CardDescription>{createdAt} {author}</CardDescription>
+        {/*<CardTitle>{title}</CardTitle>*/}
+        <BookmarkIcon className={cn('fill-black')}/>
+      </div>
     </CardHeader>
     <CardContent>
-      <p>{content}</p>
+      <ul className={cn('space-y-1')}>
+        {contents?.map((content, index) => <li key={index}>{index+1} : {content.text}</li>)}
+      </ul>
+      {/*<p>{content}</p>*/}
     </CardContent>
-    <CardFooter>
-      <p>{date}</p>
+    <CardFooter className={cn('flex', 'justify-between')}>
+      <div className={cn('flex', 'space-x-3')}>
+        {tags?.map(tag => <Badge key={tag}>{tag}</Badge>)}
+      </div>
+      <div className={cn('flex', 'space-x-3')}>
+        {/*<div>{author}</div>*/}
+      </div>
     </CardFooter>
   </Card>
 
