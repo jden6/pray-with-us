@@ -17,6 +17,7 @@ export type PrayType = {
   tags?: string[]
 }
 export type PrayCardProps = {
+  seq: number;
   title?: string;
   author: string;
   contents: contentType[];
