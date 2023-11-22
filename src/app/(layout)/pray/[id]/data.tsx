@@ -1,11 +1,14 @@
 'use client'
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { prays } from '@/data/prays'
 
 type prayContextType = {}
 export const usePrayData = (id: string) => {
   const [prepared, setPrepared] = useState(false)
   const isNew = id === 'new'
+
+  const data = prays.find(pray => pray.seq === +id)
 
   useEffect(() => {
     if (isNew) setPrepared(true)
@@ -13,14 +16,17 @@ export const usePrayData = (id: string) => {
     setPrepared(true)
   }, [isNew])
 
-  const save = () => {
+  const save = (data: any) => {
 
   }
 
   return {
     loading: !prepared,
-    data: {},
-    action: {
+    isNew,
+    data: {
+      pray: data
+    },
+    actions: {
       save
     }
   }

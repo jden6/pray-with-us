@@ -1,9 +1,10 @@
-import './globals.css'
-import type { Metadata } from 'next'
+import {Toaster} from 'react-hot-toast';
 import { Inter as FontSans } from 'next/font/google'
-import { cn } from '@/lib/utils'
 import { getServerSession } from 'next-auth'
 import SessionProvider from '@/components/providers/sessionProvider'
+import { cn } from '@/lib/utils'
+import type { Metadata } from 'next'
+import './globals.css'
 
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -24,6 +25,7 @@ export default async function RootLayout ({
     <SessionProvider session={session}>
       {children}
     </SessionProvider>
+    <Toaster />
     </body>
     </html>
   )

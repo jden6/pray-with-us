@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 const LoginPage = async () => {
   const session = await getServerSession()
   if(session != null){
-    return redirect('/home')
+    return redirect('/pray')
   }
   return (
     <div className="container relative flex h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">

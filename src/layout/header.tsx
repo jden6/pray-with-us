@@ -19,10 +19,10 @@ const LayoutHeader = () => {
           <span className={cn('hidden', 'font-bold', 'sm:inline-block')}>Pray with us</span>
         </Link>
         <nav className={cn('flex', 'items-center', 'space-x-6', 'text-sm', 'font-medium')}>
-          <Link href="/home"
-                className={cn('transition-colors', 'hover:text-foreground/80', 'text-foreground/60')}>Home</Link>
-          <Link href="/notice"
-                className={cn('transition-colors', 'hover:text-foreground/80', 'text-foreground/60')}>Notice</Link>
+          {/*<Link href="/home"*/}
+          {/*      className={cn('transition-colors', 'hover:text-foreground/80', 'text-foreground/60')}>Home</Link>*/}
+          {/*<Link href="/notice"*/}
+          {/*      className={cn('transition-colors', 'hover:text-foreground/80', 'text-foreground/60')}>Notice</Link>*/}
           <Link href="/pray"
                 className={cn('transition-colors', 'hover:text-foreground/80', 'text-foreground/60')}>pray</Link>
         </nav>

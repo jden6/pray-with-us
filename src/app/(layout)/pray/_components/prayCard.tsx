@@ -12,14 +12,14 @@ const PrayCard = ({ seq, tags, contents, author, createdAt }: PrayCardProps) => 
   return <Card onClick={() => push(`/pray/${seq}`)}>
     <CardHeader>
       <div className={cn('flex', 'justify-between')}>
-        <CardDescription>{createdAt} {author}</CardDescription>
-        {/*<CardTitle>{title}</CardTitle>*/}
+        <CardTitle>{contents[0].text}</CardTitle>
         <BookmarkIcon className={cn('fill-black')}/>
       </div>
+      <CardDescription>{author} {createdAt}</CardDescription>
     </CardHeader>
     <CardContent>
       <ul className={cn('space-y-1')}>
-        {contents?.map((content, index) => <li key={index}>{index + 1} : {content.text}</li>)}
+        {contents?.map((content, index) => <li key={index}>{index + 1}. {content.text}</li>)}
       </ul>
       {/*<p>{content}</p>*/}
     </CardContent>
