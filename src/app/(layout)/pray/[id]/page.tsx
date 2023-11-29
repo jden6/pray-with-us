@@ -1,27 +1,125 @@
 'use client';
 
-import {usePathname, useRouter} from 'next/navigation';
+import {useRouter} from 'next/navigation';
+import toast from 'react-hot-toast';
+import {useFieldArray, useForm} from 'react-hook-form';
+import dayjs from 'dayjs';
 import Page from '@/layout/Page';
 import {usePrayData} from '@/app/(layout)/pray/[id]/data';
 import {Button} from '@/components/ui/button';
-import PrayDetail from '@/app/(layout)/pray/_prayDetail';
-import {PrayType} from '@/app/(layout)/pray/pray.type';
-import PrayEditPage from '@/app/(layout)/pray/[id]/PrayEditPage';
+import {
+  Card, CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {cn} from '@/lib/utils';
+import {Label} from '@/components/ui/label';
+import {Textarea} from '@/components/ui/textarea';
+import {trpc} from '@/app/_trpc/client';
 
 const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
   const {push} = useRouter();
-  const prayData = usePrayData(prayId);
-  const {loading, isNew, data, actions: {save}} = prayData;
   const title = prayId === 'new' ? '기도 제목 작성' : '기도';
-  // const actionName = prayId === 'new' ? '작성' : '수정';
+  const submitText = prayId === 'new' ? '등록' : '수정';
 
-  return <Page key="what" title={title} actions={
-    isNew ? <Button key="save" onClick={save}>저장</Button> :
-        <><Button key="edit" onClick={() => push(`/pray/${prayId}/edit`)}>수정</Button>
-          <Button key="cancel" onClick={() => push('/pray')}>리스트</Button></>
-  }>
-    {isNew ? <PrayEditPage id={prayId}/> : loading ? <div>loading...</div> :
-        <PrayDetail pray={data.pray as PrayType}/>}
+  const {data, actions} = usePrayData(prayId);
+  const {register, handleSubmit, control} = useForm();
+
+  const {fields, prepend, append, remove} = useFieldArray({
+    name: 'pray',
+    control,
+    rules: {
+      maxLength: 5,
+    },
+  });
+
+  const handleAppend = () => {
+    if (fields.length >= 5) {
+      toast('기도 제목은 최대 5개까지만 추가할 수 있습니다.');
+      return;
+    }
+    append({value: ''}, {
+      shouldFocus: true,
+    });
+  };
+
+  const handleRemove = (index: number) => {
+    remove(index);
+  };
+
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = trpc.pray.create.useMutation();
+
+  const onSubmit = async ({pray}: any) => {
+    if (!pray.length) {
+      toast.error('기도 제목을 입력해주세요.');
+      return;
+    }
+
+    const title = pray[0].value;
+    const content = JSON.stringify(pray);
+    try {
+      await mutateAsync({title, content});
+      toast('기도 제목이 등록되었습니다.')
+      push('/pray');
+    } catch (e) {
+      toast('기도 제목 등록에 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다.')
+      return console.error(error);
+    }
+  };
+
+  return <Page key="what" title={title} actions={[
+    <Button key="cancel" onClick={() => push('/pray')}>리스트</Button>]}>
+
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardHeader>
+          <div className={cn('flex', 'justify-between')}>
+            <div>
+              <CardTitle>새 기도 작성</CardTitle>
+              <CardDescription>
+                기도 작성일 - {dayjs(new Date()).format('YYYY-MM-DD')}
+              </CardDescription>
+            </div>
+            <Button type="submit">{submitText}</Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className={cn('flex', 'flex-col', 'space-y-1.5')}>
+            <div className={cn('flex', 'justify-between', 'items-center')}>
+              <Label htmlFor="name">기도 제목{'\'s'}</Label>
+              <Button variant="outline" size="sm" type="button"
+                      className={cn('ml-2')}
+                      onClick={handleAppend}>+</Button>
+            </div>
+            <ul className={cn('space-y-1')}>
+              {!fields.length
+                ? <li
+                  className={cn('flex', 'justify-center', 'items-center',
+                    'cursor-pointer',
+                    'rounded-lg', 'border-2', 'border-gray-300', 'h-14',
+                    'hover:bg-gray-200')}>
+                  기도제목을 추가해주세요
+                </li>
+                : fields.map((field, index) => (
+                  <li key={index}
+                      className={cn('flex', 'space-x-2', 'items-center')}>
+                    <Textarea key={index} placeholder="기도 제목" {...register(
+                      `pray.${index}.value`)} />
+                    <Button variant="outline" size="sm" type="button"
+                            onClick={() => handleRemove(index)}
+                    >-</Button>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
+    </form>
   </Page>;
 };
 

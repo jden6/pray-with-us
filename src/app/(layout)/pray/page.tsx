@@ -1,35 +1,23 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
-import Page from '@/layout/Page'
-import { cn } from '@/lib/utils'
-import NoticePrayCard from '@/app/(layout)/pray/_components/noticePrayCard'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import CellPeopleCard from '@/app/(layout)/pray/_components/CellPeopleCard'
-import { PraySearch } from '@/app/(layout)/pray/_components/praySearch'
-import PrayCardList from '@/app/(layout)/pray/_components/prayCardList'
-import { Button } from '@/components/ui/button'
+import Link from 'next/link';
+import Page from '@/layout/Page';
+import {cn} from '@/lib/utils';
+import NoticeCard from '@/app/(layout)/pray/_components/noticeCard';
+import {PraySearch} from '@/app/(layout)/pray/_components/praySearch';
+import {Button} from '@/components/ui/button';
+import PrayTab from '@/app/(layout)/pray/_components/prayTab';
 
 const PrayPage = () => {
-  const { push } = useRouter()
   return <Page title="With Us Pray List"
-               actions={[<Button size="sm" key="write" onClick={() => push('/pray/new')}>새 기도 작성</Button>]}>
+               actions={[
+                 <Link key="write" href="/pray/new"><Button size="sm">새 기도 작성</Button></Link>]}>
     <div className={cn('grid', 'md:grid-cols-4', 'gap-3')}>
-      <Tabs defaultValue="cell" className={cn('col-span-3')}>
-        <TabsList>
-          <TabsTrigger value="cell">셀 기도제목</TabsTrigger>
-          <TabsTrigger value="me">내 기도제목</TabsTrigger>
-          {/*<TabsTrigger value="vg">마을 기도제목</TabsTrigger>*/}
-        </TabsList>
-        <PrayCardList/>
-      </Tabs>
-      <div className={cn('hidden', 'sm:block')}>
+      <PrayTab />
+      <div className={cn('hidden', 'sm:block', 'space-y-2')}>
         <PraySearch/>
-        <CellPeopleCard/>
-        <NoticePrayCard/>
+        <NoticeCard/>
       </div>
     </div>
-  </Page>
-}
+  </Page>;
+};
 
-export default PrayPage
+export default PrayPage;

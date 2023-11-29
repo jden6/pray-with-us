@@ -5,6 +5,7 @@ import SessionProvider from '@/components/providers/sessionProvider';
 import {cn} from '@/lib/utils';
 import type {Metadata} from 'next';
 import './globals.css';
+import Provider from '@/app/_trpc/provider';
 
 const fontSans = FontSans({subsets: ['latin'], variable: '--font-sans'});
 
@@ -23,10 +24,12 @@ export default async function RootLayout({
       <html lang="en">
       <body className={cn('min-h-screen bg-background font-sans antialiased',
           fontSans.variable)}>
-      <SessionProvider session={session}>
-        {children}
-      </SessionProvider>
-      <Toaster/>
+        <SessionProvider session={session}>
+          <Provider>
+            {children}
+          </Provider>
+        </SessionProvider>
+        <Toaster/>
       </body>
       </html>
   );
