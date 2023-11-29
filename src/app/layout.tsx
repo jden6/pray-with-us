@@ -1,11 +1,11 @@
 import {Toaster} from 'react-hot-toast';
 import {Inter as FontSans} from 'next/font/google';
 import {getServerSession} from 'next-auth';
+import Provider from '@/app/_trpc/provider';
 import SessionProvider from '@/components/providers/sessionProvider';
 import {cn} from '@/lib/utils';
 import type {Metadata} from 'next';
 import './globals.css';
-import Provider from '@/app/_trpc/provider';
 
 const fontSans = FontSans({subsets: ['latin'], variable: '--font-sans'});
 

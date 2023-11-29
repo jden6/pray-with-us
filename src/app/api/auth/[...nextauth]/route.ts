@@ -24,8 +24,8 @@ const authOption: AuthOptions = {
       const check = await supa().
         from('t_auth_info').
         select('account').
-        eq('account', user.email);
-      if (!check.data.length) {
+        eq('account', user.email).single();
+      if (!check?.data) {
         const createUser = await supa().from('t_users').insert({
           name: user.name,
           group_seq: 1,

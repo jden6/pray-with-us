@@ -12,9 +12,10 @@ import {cn} from '@/lib/utils';
 import {TPrayView} from '@/schemas/pray.schema';
 import ContentParser from '@/app/(layout)/pray/_components/contentParser';
 import {Avatar, AvatarFallback} from '@/components/ui/avatar';
+import {TUser} from '@/schemas/user.schema';
 
 const PrayCard = ({title, content, created_at, t_users}: TPrayView & {
-  author: string
+  t_users: TUser
 }) => {
   const avatarName = t_users.name?.length > 2 ? t_users.name?.substring(0, 2) : t_users.name;
   return <>
