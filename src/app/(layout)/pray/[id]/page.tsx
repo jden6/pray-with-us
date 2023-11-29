@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import {useFieldArray, useForm} from 'react-hook-form';
 import dayjs from 'dayjs';
 import Page from '@/layout/Page';
-import {usePrayData} from '@/app/(layout)/pray/[id]/data';
 import {Button} from '@/components/ui/button';
 import {
   Card, CardContent,
@@ -23,7 +22,7 @@ const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
   const title = prayId === 'new' ? '기도 제목 작성' : '기도';
   const submitText = prayId === 'new' ? '등록' : '수정';
 
-  const {data, actions} = usePrayData(prayId);
+  // const {data, actions} = usePrayData(prayId);
   const {register, handleSubmit, control} = useForm();
 
   const {fields, prepend, append, remove} = useFieldArray({

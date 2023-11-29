@@ -1,7 +1,6 @@
 import {MiddlewareFunction, ProcedureParams, TRPCError} from '@trpc/server';
 import {Context} from '@/server/context';
 import {supa} from '@/lib/supabase/client';
-import {TUser} from '@/schemas/user.schema';
 
 type AuthMiddleware = MiddlewareFunction<
   { _ctx_out: Context } & ProcedureParams,

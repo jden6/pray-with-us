@@ -1,6 +1,5 @@
 import NextAuth, {type AuthOptions} from 'next-auth';
 
-import {redirect} from 'next/navigation';
 import NaverProvider from 'next-auth/providers/naver';
 import GoogleProvider from 'next-auth/providers/google';
 import {supa} from '@/lib/supabase/client';
@@ -20,7 +19,7 @@ const authOption: AuthOptions = {
     signIn: '/signin',
   },
   callbacks: {
-    async signIn({user, account, profile, email, credentials}) {
+    async signIn({user}) {
       const check = await supa().
         from('t_auth_info').
         select('account').

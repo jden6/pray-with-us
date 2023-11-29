@@ -1,7 +1,6 @@
 'use client';
 
-import {usePathname, useRouter} from 'next/navigation';
-import {useEffect} from 'react';
+import {useRouter} from 'next/navigation';
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 import {useForm, useFieldArray} from 'react-hook-form';

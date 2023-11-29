@@ -4,7 +4,7 @@ import {supa} from '@/lib/supabase/client';
 import {
   praySchema,
   TPrayCreateSchema,
-  TPraySchema, TPrayUpdateSchema,
+  TPrayUpdateSchema,
 } from '@/schemas/pray.schema';
 
 export const prayRouter = router({
@@ -34,7 +34,7 @@ export const prayRouter = router({
     }
   }),
   getOne: publicProcedure.input(praySchema.shape.pray_seq).
-    query(async ({input: pray_seq, ctx}) => {
+    query(async ({input: pray_seq}) => {
       return supa()
         .from('t_pray')
         .select()
