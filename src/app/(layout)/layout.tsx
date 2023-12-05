@@ -3,6 +3,7 @@ import {redirect} from 'next/navigation';
 import {ReactNode} from 'react';
 import LayoutHeader from '@/layout/header';
 import LayoutContents from '@/layout/contents';
+import ModalProvider from '@/components/providers/modal.provider';
 
 const Layout = async ({children}: { children: ReactNode }) => {
   const session = await getServerSession();
@@ -13,6 +14,7 @@ const Layout = async ({children}: { children: ReactNode }) => {
     <LayoutHeader/>
     <LayoutContents>
       {children}
+      <ModalProvider />
     </LayoutContents>
   </>;
 };

@@ -14,22 +14,32 @@ export const prayRouter = router({
   getAllRecentPray: publicProcedure.query(async () => {
     return supa().from('t_pray').select().order('created_at', {ascending: false}).limit(10);
   }),
+  getGroupPrayList: publicProcedure.query(async ({ctx}) => {
+    return supa().from('t_pray').select(
+      `
+        *,
+        t_users (
+          name,
+          group_seq
+        )
+      `
+    ).match({'t_users.group_seq': ctx.user.group_seq});
+  }),
   getUserResentPray: publicProcedure.input(z.string()).query(async ({ctx, input}) => {
     const {user_seq, group_seq} = ctx.user;
-    console.log(input)
-    const result = supa().from('t_pray')
-    if(input === 'me'){
-      return result.select().match({user_seq})
-      .order('created_at', {ascending: false}).limit(5);
-    }
-    if(input === 'cell'){
-      return result.select(`
+    const result = supa().from('t_pray').select(`
         *,
         t_users (
           group_seq,
           name
         )
-      `).filter('t_users.group_seq', 'eq', group_seq)
+      `)
+    if(input === 'me'){
+      return result.match({user_seq})
+      .order('created_at', {ascending: false}).limit(5);
+    }
+    if(input === 'cell'){
+      return result.filter('t_users.group_seq', 'eq', group_seq)
         .order('created_at', {ascending: false}).limit(5);
     }
   }),
@@ -37,7 +47,16 @@ export const prayRouter = router({
     query(async ({input: pray_seq}) => {
       return supa()
         .from('t_pray')
-        .select()
+        .select(`
+          content,
+          pray_seq,
+          created_at,
+          updated_at,
+          user_seq,
+          t_users (
+            name
+          )
+        `)
         .match({pray_seq}).single();
     }),
   getGroupPray: publicProcedure.query(async ({ctx}) => {
@@ -58,7 +77,8 @@ export const prayRouter = router({
     return supa().from('t_pray').insert({...input, user_seq});
   }),
   update: publicProcedure.input(TPrayUpdateSchema).mutation(async ({input}) => {
-    return supa().from('t_pray').update(input);
+    const {pray_seq, ...rest} = input;
+    return supa().from('t_pray').update(rest).eq('pray_seq', pray_seq);
   }),
   delete: publicProcedure.input(praySchema.shape.pray_seq).
     mutation(async ({input: pray_seq}) => {

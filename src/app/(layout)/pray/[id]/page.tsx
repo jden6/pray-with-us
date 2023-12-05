@@ -1,5 +1,6 @@
 'use client';
 
+import {useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import toast from 'react-hot-toast';
 import {useFieldArray, useForm} from 'react-hook-form';
@@ -15,14 +16,15 @@ import {
 import {cn} from '@/lib/utils';
 import {Label} from '@/components/ui/label';
 import {Textarea} from '@/components/ui/textarea';
-import {trpc} from '@/app/_trpc/client';
+import {api} from '@/app/_trpc/client';
+import {usePrayData} from '@/app/(layout)/pray/[id]/data';
 
 const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
   const {push} = useRouter();
   const title = prayId === 'new' ? '기도 제목 작성' : '기도';
   const submitText = prayId === 'new' ? '등록' : '수정';
 
-  // const {data, actions} = usePrayData(prayId);
+  const {isNew, data, actions} = usePrayData(prayId);
   const {register, handleSubmit, control} = useForm();
 
   const {fields, prepend, append, remove} = useFieldArray({
@@ -47,12 +49,6 @@ const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
     remove(index);
   };
 
-  const {
-    mutateAsync,
-    error,
-    isLoading: mutateLoading,
-  } = trpc.pray.create.useMutation();
-
   const onSubmit = async ({pray}: any) => {
     if (!pray.length) {
       toast.error('기도 제목을 입력해주세요.');
@@ -61,15 +57,21 @@ const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
 
     const title = pray[0].value;
     const content = JSON.stringify(pray);
-    try {
-      await mutateAsync({title, content});
-      toast('기도 제목이 등록되었습니다.')
-      push('/pray');
-    } catch (e) {
-      toast('기도 제목 등록에 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다.')
-      return console.error(error);
-    }
+    console.log({title, content})
+    await actions.save({title, content})
   };
+
+  useEffect(() => {
+    if (!isNew && data?.pray) {
+      const {content} = data.pray;
+      const parsed = JSON.parse(content || '[]');
+      parsed.map(({value}: { value: string }) => {
+        append({value}, {
+          shouldFocus: true,
+        });
+      });
+    }
+  }, [data.pray]);
 
   return <Page key="what" title={title} actions={[
     <Button key="cancel" onClick={() => push('/pray')}>리스트</Button>]}>

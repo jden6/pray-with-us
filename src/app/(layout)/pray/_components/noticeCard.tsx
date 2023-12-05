@@ -6,8 +6,8 @@ const NoticeCard = () => {
     <CardHeader>
       <CardTitle>공지사항</CardTitle>
     </CardHeader>
-    <CardContent className={cn('space-y-3')}>
-      <ul>
+    <CardContent>
+      <ul className={cn('space-y-3')}>
         <li>프로토타입 테스트 중입니다.</li>
         <li>서로의 기도제목을 위해 기도해줍시다</li>
       </ul>

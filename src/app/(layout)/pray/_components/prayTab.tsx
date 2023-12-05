@@ -13,7 +13,7 @@ const PrayTab = () => {
       <TabsTrigger value="me" onClick={() => setTab('me')}>내 기도제목</TabsTrigger>
       {/*<TabsTrigger value="vg">마을 기도제목</TabsTrigger>*/}
     </TabsList>
-    <PrayList tab={tab}/>
+    {/*<PrayList tab={tab}/>*/}
   </Tabs>
 }
 

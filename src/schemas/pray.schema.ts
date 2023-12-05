@@ -2,7 +2,7 @@ import {z} from 'zod';
 import dayjs from 'dayjs';
 
 export const praySchema = z.object({
-  pray_seq: z.number(),
+  pray_seq: z.coerce.number(),
   title: z.string(),
   content: z.string(),
   user_seq: z.coerce.number(),

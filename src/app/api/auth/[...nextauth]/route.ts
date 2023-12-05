@@ -39,6 +39,13 @@ const authOption: AuthOptions = {
 
       return true;
     },
+    async session({session}) {
+      const {data} = await supa().from('t_auth_info').select(`
+          account,
+          user_seq
+        `).eq('account', session.user?.email).single();
+      return {...session, user: {...session.user, user_seq: data?.user_seq}};
+    },
   },
 };
 
