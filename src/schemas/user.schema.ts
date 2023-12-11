@@ -1,7 +1,7 @@
-import {z} from 'zod';
+import { z } from "zod";
 
 export const userSchema = z.object({
-  user_seq: z.coerce.number().optional(),
+  user_seq: z.coerce.number(),
   name: z.string(),
   email: z.string().email(),
   access_level_seq: z.number().optional().default(21),
@@ -10,7 +10,7 @@ export const userSchema = z.object({
   // passwordConfirmation: z.string().min(8),
 });
 
-export type TUser = z.infer<typeof userSchema>
+export type TUser = z.infer<typeof userSchema>;
 
 export const getOneUserSchema = userSchema.pick({
   user_seq: true,

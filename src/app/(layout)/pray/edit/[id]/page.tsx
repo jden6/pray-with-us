@@ -17,7 +17,7 @@ import {cn} from '@/lib/utils';
 import {Label} from '@/components/ui/label';
 import {Textarea} from '@/components/ui/textarea';
 import {api} from '@/app/_trpc/client';
-import {usePrayData} from '@/app/(layout)/pray/[id]/data';
+import {usePrayData} from '@/app/(layout)/pray/edit/[id]/data';
 
 const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
   const {push} = useRouter();
@@ -62,7 +62,9 @@ const PrayPage = ({params: {id: prayId}}: { params: { id: string } }) => {
   };
 
   useEffect(() => {
+    console.log('aaa data', data)
     if (!isNew && data?.pray) {
+      console.log('new---')
       const {content} = data.pray;
       const parsed = JSON.parse(content || '[]');
       parsed.map(({value}: { value: string }) => {

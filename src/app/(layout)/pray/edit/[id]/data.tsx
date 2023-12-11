@@ -45,7 +45,7 @@ export const usePrayData = (id: number | string) => {
     isLoading: !isNew && isLoading,
     isNew,
     data: {
-      pray: data && data.data,
+      pray: data,
     },
     actions: {
       save,

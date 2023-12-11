@@ -11,11 +11,13 @@ import {TPrayView} from '@/schemas/pray.schema';
 import ContentParser from '@/app/(layout)/pray/_components/contentParser';
 import {TUser} from '@/schemas/user.schema';
 import {usePrayModal} from '@/hooks/use.pray.modal';
+import {usePraySheet} from '@/hooks/use.pray.sheet';
 
 const PrayCard = ({pray_seq, title, content, created_at, t_users}: TPrayView & {
   t_users?: TUser
 }) => {
-  const onOpen = usePrayModal(state => state.onOpen)
+  // const onOpen = usePrayModal(state => state.onOpen)
+  const onOpen = usePraySheet(state => state.onOpen)
   // const avatarName = t_users && (t_users.name?.length > 2 ? t_users.name?.substring(0, 2) : t_users.name);
   return <Card>
     <CardHeader>
