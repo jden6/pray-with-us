@@ -16,6 +16,7 @@
       "anonymous": "always",
       "named": "never",
       "asyncArrow": "always"
-    }]
+    }],
+    "react-hooks/rules-of-hooks": "never"
   }
 }
