@@ -6,12 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { api } from "@/app/_trpc/client";
 
 const Provider = ({ children }: { children: ReactNode }) => {
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:3000/api/trpc",
+          url: `${apiURL}/api/trpc`,
         }),
       ],
     }),
