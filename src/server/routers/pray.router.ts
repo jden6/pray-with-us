@@ -34,6 +34,7 @@ export const prayRouter = router({
         `,
         )
         .match({ "t_users.group_seq": ctx.user.group_seq })
+        .order("created_at", { ascending: false })
         .returns<TPrayView[]>();
       return response.data || ([] as TPrayView[]);
     } catch (e) {
@@ -49,9 +50,10 @@ export const prayRouter = router({
       .select()
       .match({ user_seq: ctx.user.user_seq })
       .order("created_at", { ascending: false })
-      .returns<TPrayView>();
+      .returns<TPrayView[]>();
     return result.data;
   }),
+
   getUserResentPray: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
@@ -85,8 +87,8 @@ export const prayRouter = router({
           .select(`*, t_users (name, group_seq)`)
           .match({ pray_seq })
           .returns<TPrayView>()
-          .single();
-        return response.data || ({} as TPrayView);
+          .single<TPrayView>();
+        return response.data;
       } catch (e) {
         throw new TRPCError({
           code: "NOT_FOUND",

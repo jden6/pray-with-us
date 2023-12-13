@@ -1,7 +1,7 @@
 "use client";
 
-import {useEffect, useState} from 'react';
-import PraySheet from '@/components/pray.sheet';
+import { useEffect, useState } from "react";
+import PraySheet from "@/components/pray.sheet";
 
 const SheetProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -10,7 +10,7 @@ const SheetProvider = () => {
     setIsMounted(true);
   }, []);
 
-  if(!isMounted) {
+  if (!isMounted) {
     return null;
   }
 
@@ -19,6 +19,6 @@ const SheetProvider = () => {
       <PraySheet />
     </>
   );
-}
+};
 
-export default SheetProvider
+export default SheetProvider;

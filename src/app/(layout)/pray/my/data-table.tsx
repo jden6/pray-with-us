@@ -48,19 +48,24 @@ function DataTable<TData, TValue>({
       <TableBody>
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => {
-            return <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && "selected"}
-              onClick={() => rowClick(row.original)}
-            >
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
+            return (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+                onClick={() => rowClick(row.original)}
+              >
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
           })
         ) : (
           <TableRow>

@@ -1,6 +1,6 @@
 "use client";
-import {useEffect, useState} from 'react';
-import PrayModal from '@/components/pray.modal';
+import { useEffect, useState } from "react";
+import PrayModal from "@/components/pray.modal";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -9,7 +9,7 @@ const ModalProvider = () => {
     setIsMounted(true);
   }, []);
 
-  if(!isMounted) {
+  if (!isMounted) {
     return null;
   }
 
@@ -17,7 +17,7 @@ const ModalProvider = () => {
     <>
       <PrayModal />
     </>
-  )
-}
+  );
+};
 
-export default ModalProvider
+export default ModalProvider;
