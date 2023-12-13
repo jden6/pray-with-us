@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,8 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import LogoutButton from "@/layout/logout.button";
 
-const LayoutHeader = () => {
+const LayoutHeader = async () => {
+  const session = await getServerSession();
   return (
     <header
       className={cn(
@@ -106,7 +108,7 @@ const LayoutHeader = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuLabel>환영합니다 :)</DropdownMenuLabel>
+              <DropdownMenuLabel>{session?.user.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuSeparator />

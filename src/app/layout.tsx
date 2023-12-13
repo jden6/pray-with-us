@@ -25,13 +25,17 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <SessionProvider session={session}>
           <Provider>{children}</Provider>
         </SessionProvider>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            position: "top-right",
+          }}
+        />
       </body>
     </html>
   );

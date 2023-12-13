@@ -28,8 +28,8 @@ const PrayPage = () => {
     >
       <div className={cn("grid", "md:grid-cols-4", "gap-3")}>
         <div className={cn("col-span-3")}>
+          {isLoading ? "Loading..." : <PrayList list={data || []} />}
           {/*// TODO: loading progress 필요*/}
-          {data && <PrayList list={data} />}
           {data?.length === 0 && <NoDataCard />}
         </div>
         <div className={cn("hidden", "sm:block", "space-y-2")}>
