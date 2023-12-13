@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   createContext,
   ReactNode,
@@ -12,13 +13,13 @@ import { api } from "@/app/_trpc/client";
 
 type prayContextType = {};
 export const usePrayData = (id: number | string) => {
+  const { push } = useRouter();
   const [prepared, setPrepared] = useState(false);
   const isNew = id === "new";
 
   const { data, isLoading } = api.pray.getOne.useQuery(+id, {
     enabled: !isNew,
   });
-  console.log("dd", data);
   const { mutateAsync: create } = api.pray.create.useMutation();
   const { mutateAsync: update } = api.pray.update.useMutation();
 
@@ -36,7 +37,7 @@ export const usePrayData = (id: number | string) => {
       } catch (e) {
         console.error(e);
         toast(
-          "기도 제목 등록에 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다.",
+          "기도 제목 등록에 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다."
         );
       }
     } else {
@@ -46,10 +47,11 @@ export const usePrayData = (id: number | string) => {
       } catch (e) {
         console.error(e);
         toast(
-          "기도 제목 수정이 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다.",
+          "기도 제목 수정이 실패했습니다.\n현상이 지속될 경우 관리자에게 문의 바랍니다."
         );
       }
     }
+    push("/pray");
   };
 
   return {

@@ -1,7 +1,4 @@
 import dayjs from "dayjs";
-import { Pencil } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -13,18 +10,17 @@ import { cn } from "@/lib/utils";
 import { api } from "@/app/_trpc/client";
 
 const PraySheet = () => {
-  const { data: session } = useSession();
-  const { push } = useRouter();
+  // const { data: session } = useSession();
+  // const { push } = useRouter();
   const { id, isOpen, onClose } = usePraySheet();
   const { data, isLoading, isFetching } = api.pray.getOne.useQuery(id || 0, {
     enabled: !!id,
   });
-  const isOwner = session?.user && session.user.user_seq === data?.user_seq;
-
-  const handleEdit = () => {
-    push(`/pray/edit/${id}`);
-    onClose();
-  };
+  // const isOwner = session?.user.user_seq === data?.user_seq;
+  // const handleEdit = () => {
+  //   push(`/pray/edit/${id}`);
+  //   onClose();
+  // };
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -34,12 +30,14 @@ const PraySheet = () => {
           <>
             <SheetTitle className={cn("flex", "space-x-10", "items-center")}>
               <span>{dayjs(data?.created_at).format("YYYY-MM-DD")}</span>
-              <div
-                className={cn("text-sm", "cursor-pointer")}
-                onClick={handleEdit}
-              >
-                <Pencil size={16} />
-              </div>
+              {/* {isOwner && (
+                <div
+                  className={cn("text-sm", "cursor-pointer")}
+                  onClick={handleEdit}
+                >
+                  <Pencil size={16} />
+                </div>
+              )} */}
             </SheetTitle>
             <SheetDescription className={cn("mt-3")}>
               {data.title}

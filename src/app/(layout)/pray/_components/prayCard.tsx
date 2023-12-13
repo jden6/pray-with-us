@@ -10,7 +10,6 @@ import {cn} from '@/lib/utils';
 import {TPrayView} from '@/schemas/pray.schema';
 import ContentParser from '@/app/(layout)/pray/_components/contentParser';
 import {TUser} from '@/schemas/user.schema';
-import {usePrayModal} from '@/hooks/use.pray.modal';
 import {usePraySheet} from '@/hooks/use.pray.sheet';
 
 const PrayCard = ({pray_seq, title, content, created_at, t_users}: TPrayView & {

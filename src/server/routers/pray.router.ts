@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { publicProcedure, router } from "@/server/trpc";
 import { supa } from "@/lib/supabase/client";
 import {
@@ -31,10 +30,11 @@ export const prayRouter = router({
             name,
             group_seq
           )
-        `,
+        `
         )
         .match({ "t_users.group_seq": ctx.user.group_seq })
         .order("created_at", { ascending: false })
+        .limit(10)
         .returns<TPrayView[]>();
       return response.data || ([] as TPrayView[]);
     } catch (e) {
@@ -53,31 +53,6 @@ export const prayRouter = router({
       .returns<TPrayView[]>();
     return result.data;
   }),
-
-  getUserResentPray: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      const { user_seq, group_seq } = ctx.user;
-      const result = supa().from("t_pray").select(`
-        *,
-        t_users (
-          group_seq,
-          name
-        )
-      `);
-      if (input === "me") {
-        return result
-          .match({ user_seq })
-          .order("created_at", { ascending: false })
-          .limit(5);
-      }
-      if (input === "cell") {
-        return result
-          .filter("t_users.group_seq", "eq", group_seq)
-          .order("created_at", { ascending: false })
-          .limit(5);
-      }
-    }),
   getOne: publicProcedure
     .input(praySchema.shape.pray_seq)
     .query(async ({ input: pray_seq }) => {
@@ -106,7 +81,7 @@ export const prayRouter = router({
         t_users (
           group_seq
         )
-      `,
+      `
       )
       .filter("t_users.group_seq", "eq", group_seq)
       .match({ group_seq });
