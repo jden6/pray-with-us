@@ -3,20 +3,47 @@
     "next/core-web-vitals"
   ],
   "rules": {
-    "no-multiple-empty-lines": ["warn", { "max": 1 }],
-    "max-len": ["warn", { "code": 120 }],
-    "import/order": [
-      "error", {
-        "groups": ["builtin", "external", "internal", ["parent", "sibling"], "index", "object", "type"]
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 1
       }
     ],
-//    "quotes": ["error", "single"],
-    "comma-dangle": ["error", "only-multiline"],
-    "space-before-function-paren": ["error", {
-      "anonymous": "always",
-      "named": "never",
-      "asyncArrow": "always"
-    }],
-    "react-hooks/rules-of-hooks": "never"
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling"
+          ],
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ],
+    //    "quotes": ["error", "single"],
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
   }
 }

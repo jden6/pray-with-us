@@ -30,7 +30,7 @@ export const prayRouter = router({
             name,
             group_seq
           )
-        `
+        `,
         )
         .match({ "t_users.group_seq": ctx.user.group_seq })
         .order("created_at", { ascending: false })
@@ -47,7 +47,7 @@ export const prayRouter = router({
   getMyPrayList: publicProcedure.query(async ({ ctx }) => {
     const result = await supa()
       .from("t_pray")
-      .select()
+      .select(`*, t_users (name, group_seq)`)
       .match({ user_seq: ctx.user.user_seq })
       .order("created_at", { ascending: false })
       .returns<TPrayView[]>();
@@ -81,7 +81,7 @@ export const prayRouter = router({
         t_users (
           group_seq
         )
-      `
+      `,
       )
       .filter("t_users.group_seq", "eq", group_seq)
       .match({ group_seq });

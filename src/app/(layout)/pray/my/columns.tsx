@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { TPrayView } from "@/schemas/pray.schema";
 import { api } from "@/app/_trpc/client";
-import { usePraySheet } from "@/hooks/use.pray.sheet";
 
 export const columns: ColumnDef<TPrayView>[] = [
   {
@@ -30,9 +29,8 @@ export const columns: ColumnDef<TPrayView>[] = [
     accessorKey: "title",
     header: "기도제목",
     cell: ({ row }) => {
-      const onOpen = usePraySheet((state) => state.onOpen);
       return (
-        <div onClick={() => onOpen(row.original.pray_seq)}>
+        <div>
           {row.getValue("title")}
         </div>
       );
@@ -42,7 +40,6 @@ export const columns: ColumnDef<TPrayView>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const { push } = useRouter();
       const { pray_seq } = row.original;
       const { mutateAsync } = api.pray.delete.useMutation();
       const { refetch } = api.pray.getMyPrayList.useQuery();
@@ -65,7 +62,7 @@ export const columns: ColumnDef<TPrayView>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => push(`/pray/edit/${pray_seq}`)}>
+            <DropdownMenuItem>
               수정
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleDeletePray}>삭제</DropdownMenuItem>

@@ -29,7 +29,7 @@ export const usePrayData = (id: number | string) => {
     // setPrepared(true);
   }, [isNew]);
 
-  const save = async (data: { title: string; content: string }) => {
+  const save = async (data: { content: string }) => {
     if (isNew) {
       try {
         await create(data);
