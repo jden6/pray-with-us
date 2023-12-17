@@ -40,10 +40,9 @@ const PrayModal = () => {
             {data && dayjs(data?.created_at).format("YYYY-MM-DD HH:mm")}
           </DialogDescription>
         </DialogHeader>
-        <div>
+        <div className={cn("whitespace-pre-wrap")}>
           {data && data?.content}
         </div>
-        {/*<ContentParser contents={(data && data?.content) || ""} />*/}
         <DialogFooter>
           <DialogClose className={cn("space-x-2")}>
             {isMine && (

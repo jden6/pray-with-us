@@ -22,8 +22,6 @@ const PrayPage = ({ params: { id: prayId } }: { params: { id: string } }) => {
   const { push } = useRouter();
 
   const { data, actions } = usePrayData(prayId);
-
-  const [editDate, setEditDate] = useState<Date | string>(new Date());
   const title = prayId === "new" ? "기도 제목 작성하기" : "기도 제목 수정하기";
   const submitText = prayId === "new" ? "등록" : "수정";
 
@@ -35,15 +33,14 @@ const PrayPage = ({ params: { id: prayId } }: { params: { id: string } }) => {
     if (!content.length) {
       return toast("기도 내용을 입력해주세요.");
     }
-    console.log("content", content)
-    // await actions.save({ content: content.toString().trim() });
+    await actions.save({ content: content.toString().trim() });
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && data.pray?.content) {
       setValue("content", data.pray?.content);
     }
-  }, [data]);
+  }, [data.pray?.content]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +62,7 @@ const PrayPage = ({ params: { id: prayId } }: { params: { id: string } }) => {
               <div>
                 <CardTitle>기도 {prayId === "new" ? "작성" : "수정"}</CardTitle>
                 <CardDescription>
-                  기도 작성일 : {dayjs(editDate).format("YYYY-MM-DD")}
+                  기도 작성일 : {dayjs(data.pray?.created_at).format("YYYY-MM-DD")}
                 </CardDescription>
               </div>
             </div>

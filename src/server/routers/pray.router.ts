@@ -97,8 +97,8 @@ export const prayRouter = router({
   update: publicProcedure
     .input(TPrayUpdateSchema)
     .mutation(async ({ input }) => {
-      const { pray_seq, ...rest } = input;
-      return supa().from("t_pray").update(rest).eq("pray_seq", pray_seq);
+      const { pray_seq, content } = input;
+      return supa().from("t_pray").update({ content }).eq("pray_seq", pray_seq);
     }),
   delete: publicProcedure
     .input(praySchema.shape.pray_seq)
