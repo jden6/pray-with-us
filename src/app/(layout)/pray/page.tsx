@@ -5,9 +5,9 @@ import Page from "@/layout/Page";
 import { cn } from "@/lib/utils";
 import NoticeCard from "@/app/(layout)/pray/_components/noticeCard";
 import { Button } from "@/components/ui/button";
-import PrayList from "@/components/pray/list";
 import { api } from "@/app/_trpc/client";
 import NoDataCard from "@/app/(layout)/pray/_components/NoDataCard";
+import PrayCard from "@/app/(layout)/pray/_components/prayCard";
 
 const PrayPage = () => {
   const { push } = useRouter();
@@ -27,8 +27,18 @@ const PrayPage = () => {
       }
     >
       <div className={cn("grid", "md:grid-cols-4", "gap-3")}>
-        <div className={cn("col-span-3")}>
-          {isLoading ? "Loading..." : <PrayList list={data || []} />}
+        <div
+          className={cn(
+            "col-span-3",
+            "grid",
+            "lg:grid-cols-2",
+            "xl:grid-cols-3",
+            "gap-2",
+          )}
+        >
+          {isLoading
+            ? "Loading..."
+            : data?.map((item) => <PrayCard key={item.pray_seq} {...item} />)}
           {/*// TODO: loading progress 필요*/}
           {data?.length === 0 && <NoDataCard />}
         </div>

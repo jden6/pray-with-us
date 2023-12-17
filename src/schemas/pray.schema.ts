@@ -20,13 +20,11 @@ export const praySchema = z.object({
 export type TPraySchema = z.infer<typeof praySchema>;
 
 export const TPrayCreateSchema = praySchema.pick({
-  title: true,
   content: true,
 });
 
 export const TPrayUpdateSchema = praySchema.pick({
   pray_seq: true,
-  title: true,
   content: true,
 });
 
