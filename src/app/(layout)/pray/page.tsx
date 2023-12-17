@@ -16,7 +16,7 @@ const PrayPage = () => {
   const { push } = useRouter();
   const { data, isLoading } = api.pray.getGroupPrayList.useQuery();
   useEffect(() => {
-    update().then()
+    update().then();
   }, [isLoading]);
   return (
     <Page
