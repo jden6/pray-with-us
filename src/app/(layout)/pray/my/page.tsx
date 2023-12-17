@@ -19,8 +19,19 @@ const MyPage = () => {
         </Button>,
       ]}
     >
-      <div className={cn("grid", "md:grid-cols-3", "xl:grid-cols-4", "grid-cols-1", "gap-3")}>
-        {data && data.map((pray) => <PrayCard key={pray.pray_seq} {...pray} />)}
+      <div
+        className={cn(
+          "grid",
+          "md:grid-cols-3",
+          "xl:grid-cols-4",
+          "grid-cols-1",
+          "gap-3",
+        )}
+      >
+        {data &&
+          data.map((pray) => {
+            return <PrayCard key={pray.pray_seq} {...pray} />;
+          })}
       </div>
     </Page>
   );

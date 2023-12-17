@@ -48,7 +48,7 @@ const authOption: AuthOptions = {
       return true;
     },
     async session({ session }) {
-      const { data } = await supa()
+      const response = await supa()
         .from("t_auth_info")
         .select(
           `
@@ -60,7 +60,7 @@ const authOption: AuthOptions = {
         .single();
       return {
         ...session,
-        user: { ...session.user, user_seq: data?.user_seq },
+        user: { ...session.user, user_seq: response.data?.user_seq },
       };
     },
   },

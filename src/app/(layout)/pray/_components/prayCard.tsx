@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
@@ -16,7 +17,6 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { TPrayView } from "@/schemas/pray.schema";
-import { TUser } from "@/schemas/user.schema";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenuContent,
@@ -25,22 +25,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useConfirmModal, usePrayModal } from "@/hooks/use.modal";
 
-const PrayCard = ({
-  pray_seq,
-  content,
-  created_at,
-  user_seq,
-  t_users,
-}: TPrayView & {
-  t_users?: TUser;
-}) => {
+const PrayCard = ({ pray_seq, content, created_at, t_users, user_seq }: TPrayView) => {
   const session = useSession();
   const { push } = useRouter();
   const { onOpen } = useConfirmModal((state) => state);
   const { onOpen: openModal } = usePrayModal((state) => state);
-
-  const isMine = user_seq === session?.data?.user?.user_seq!;
-
   return (
     <Card className={cn("group")}>
       <CardHeader>
@@ -56,7 +45,7 @@ const PrayCard = ({
           >
             <span>{t_users && t_users.name}의 기도</span>
           </CardTitle>
-          {isMine && (
+          {session.data?.user.user_seq === user_seq && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className={cn("h-8 w-8 p-0")} size="sm">
