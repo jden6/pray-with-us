@@ -30,7 +30,7 @@ export const prayRouter = router({
             name,
             group_seq
           )
-        `
+        `,
         )
         .match({ "t_users.group_seq": ctx.user.group_seq })
         .order("created_at", { ascending: false })
@@ -81,7 +81,7 @@ export const prayRouter = router({
         t_users (
           group_seq
         )
-      `
+      `,
       )
       .filter("t_users.group_seq", "eq", group_seq)
       .match({ group_seq });
@@ -97,8 +97,8 @@ export const prayRouter = router({
   update: publicProcedure
     .input(TPrayUpdateSchema)
     .mutation(async ({ input }) => {
-      const { pray_seq, ...rest } = input;
-      return supa().from("t_pray").update(rest).eq("pray_seq", pray_seq);
+      const { pray_seq, content } = input;
+      return supa().from("t_pray").update({ content }).eq("pray_seq", pray_seq);
     }),
   delete: publicProcedure
     .input(praySchema.shape.pray_seq)
