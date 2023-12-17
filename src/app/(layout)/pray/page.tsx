@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Page from "@/layout/Page";
 import { cn } from "@/lib/utils";
@@ -10,8 +12,12 @@ import NoDataCard from "@/app/(layout)/pray/_components/NoDataCard";
 import PrayCard from "@/app/(layout)/pray/_components/prayCard";
 
 const PrayPage = () => {
+  const { update } = useSession();
   const { push } = useRouter();
   const { data, isLoading } = api.pray.getGroupPrayList.useQuery();
+  useEffect(() => {
+    update().then()
+  }, [isLoading]);
   return (
     <Page
       title="With Us Pray List"
