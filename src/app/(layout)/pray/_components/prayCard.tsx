@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { TPrayView } from "@/schemas/pray.schema";
+import { TUser } from "@/schemas/user.schema";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenuContent,
@@ -24,7 +24,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useConfirmModal, usePrayModal } from "@/hooks/use.modal";
-import { TUser } from "@/schemas/user.schema";
 
 const PrayCard = ({
   pray_seq,
