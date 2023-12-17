@@ -25,7 +25,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useConfirmModal, usePrayModal } from "@/hooks/use.modal";
 
-const PrayCard = ({ pray_seq, content, created_at, t_users, user_seq }: TPrayView) => {
+const PrayCard = ({
+  pray_seq,
+  content,
+  created_at,
+  t_users,
+  user_seq,
+}: TPrayView) => {
   const session = useSession();
   const { push } = useRouter();
   const { onOpen } = useConfirmModal((state) => state);
